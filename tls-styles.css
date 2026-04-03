@@ -292,16 +292,20 @@ body {
   padding: 13px 28px; border-radius: 50px;
   text-decoration: none;
   background: var(--bgc);
-  color: var(--tx) !important; -webkit-text-fill-color: var(--tx) !important;
   border: 1.5px solid var(--br);
   transition: transform 0.2s, border-color 0.2s;
+  /* Gradient text */
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image: var(--gradh), var(--bgc);
+  background-origin: border-box;
 }
 .cta-btn-sec:hover {
   border-color: var(--p);
-  color: var(--p) !important; -webkit-text-fill-color: var(--p) !important;
   transform: translateY(-2px);
 }
-
+ 
 
 /* ══ 8. CARDS ═══════════════════════════════════════════════════ */
 /* Auto-fill card grid — typically wraps H3+content sections */
