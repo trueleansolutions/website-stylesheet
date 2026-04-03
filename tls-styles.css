@@ -1,0 +1,573 @@
+/*
+  ══════════════════════════════════════════════════════════════════
+  TLS DESIGN SYSTEM  —  tls-styles.css
+  True Lean Solutions  |  trueleansolutions.com
+  ══════════════════════════════════════════════════════════════════
+
+  HOW TO USE
+  ──────────
+  1. Link this file in every page:
+       <link rel="stylesheet" href="tls-styles.css">
+  2. Keep page-specific overrides in a <style> block inside that page.
+  3. Never hard-code a color or font-family directly — always use the
+     CSS custom properties defined in :root below.
+
+  TABLE OF CONTENTS
+  ─────────────────
+  0. DESIGN TOKENS (colors, fonts, spacing)
+  1. RESET & BASE
+  2. BACKGROUND (animated orbs + grid)
+  3. PAGE CONTAINER
+  4. HEADINGS  (h1 → h3)
+  5. BODY TEXT  (p, subheadline)
+  6. LINKS
+  7. CTA BUTTONS  (.cta-btn, .cta-btn-sec, .cta-wrap)
+  8. CARDS  (.doc-card, .doc-cards-grid)
+  9. TEAM CARDS  (.team-grid, .team-card, …)
+  10. TABLES
+  11. IMAGES
+  12. BLOCKQUOTE
+  13. LISTS
+  14. LOADING & ERROR STATES
+  15. ANIMATIONS
+  16. RESPONSIVE  (tablet ≤768px, mobile ≤480px, small ≤360px)
+  ══════════════════════════════════════════════════════════════════
+*/
+
+
+/* ══ 0. DESIGN TOKENS ═══════════════════════════════════════════ */
+/*
+  COLORS
+  ──────
+  --p    Primary (Red)          #D94040   CTAs, accents, H3 text, list markers
+  --a    Accent (Purple)        #8B2D6E   Mid-stop on gradient
+  --s    Secondary (Blue)       #1A72E8   Links, LinkedIn color
+  --bg   Page background        #F8F8FC   Very light lavender-white
+  --bgc  Card / surface white   #FFFFFF   Cards, tables, blockquotes
+  --bgs  Subtle surface         #F0F0F7   Alternating table rows, placeholder
+  --tx   Body text dark         #0D0D0D   Headings, strong text
+  --txm  Muted text             #5A5A72   Body copy, captions
+  --br   Border / rule          #E2E2EE   All borders and dividers
+
+  GRADIENTS
+  ─────────
+  --grad   135° diagonal   Red → Purple → Blue   (hero text fills)
+  --gradh  90°  horizontal  Red → Blue            (buttons, underline bars)
+
+  FONTS
+  ─────
+  --fh  'Montserrat'  600/700/800   Headings, labels, buttons
+  --fb  'Roboto'      300/400/500   All body copy
+
+  SHAPE & SHADOW
+  ──────────────
+  --rad   12px      Default border-radius (cards, tables, images)
+  --sh    Subtle box-shadow    (cards at rest)
+  --shm   Strong box-shadow    (images, elevated elements)
+*/
+:root {
+  /* Brand colors */
+  --p:    #D94040;
+  --a:    #8B2D6E;
+  --s:    #1A72E8;
+  --bg:   #F8F8FC;
+  --bgc:  #FFFFFF;
+  --bgs:  #F0F0F7;
+  --tx:   #0D0D0D;
+  --txm:  #5A5A72;
+  --br:   #E2E2EE;
+
+  /* Gradients */
+  --grad:  linear-gradient(135deg, #D94040 0%, #8B2D6E 50%, #1A72E8 100%);
+  --gradh: linear-gradient(90deg, #D94040, #1A72E8);
+
+  /* Typography */
+  --fh: 'Montserrat', sans-serif;
+  --fb: 'Roboto', sans-serif;
+
+  /* Shape */
+  --rad: 12px;
+
+  /* Shadows */
+  --sh:  0 2px 16px rgba(13, 13, 13, 0.07);
+  --shm: 0 8px 32px rgba(13, 13, 13, 0.12);
+}
+
+
+/* ══ 1. RESET & BASE ════════════════════════════════════════════ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--fb);
+  background: var(--bg);
+  color: var(--tx);
+  overflow-x: hidden;
+}
+
+
+/* ══ 2. BACKGROUND ══════════════════════════════════════════════ */
+/* Animated blurred orbs + subtle grid — placed behind all content */
+#bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.10;
+}
+/* Red orb — top-left */
+.o1 {
+  width: 600px; height: 600px;
+  background: var(--p);
+  top: -200px; left: -150px;
+  animation: f1 14s ease-in-out infinite;
+}
+/* Blue orb — bottom-right */
+.o2 {
+  width: 500px; height: 500px;
+  background: var(--s);
+  bottom: -100px; right: -100px;
+  animation: f2 17s ease-in-out infinite;
+}
+/* Dot grid overlay */
+.grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--br) 1px, transparent 1px),
+    linear-gradient(90deg, var(--br) 1px, transparent 1px);
+  background-size: 56px 56px;
+  opacity: 0.45;
+}
+
+
+/* ══ 3. PAGE CONTAINER ══════════════════════════════════════════ */
+#page {
+  position: relative;
+  z-index: 1;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 64px 32px 80px;
+}
+
+
+/* ══ 4. HEADINGS ════════════════════════════════════════════════ */
+#page h1 {
+  font-family: var(--fh);
+  font-size: clamp(36px, 6vw, 64px);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+  background: var(--grad);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 20px;
+  animation: fadeUp 0.5s ease 0.1s both;
+}
+
+#page h2 {
+  font-family: var(--fh);
+  font-size: clamp(22px, 3vw, 32px);
+  font-weight: 700;
+  color: var(--tx);
+  margin: 56px 0 14px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--br);
+  position: relative;
+}
+/* Gradient accent line under h2 */
+#page h2::after {
+  content: '';
+  position: absolute;
+  left: 0; bottom: -2px;
+  width: 48px; height: 2px;
+  background: var(--gradh);
+}
+
+#page h3 {
+  font-family: var(--fh);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--p);
+  margin: 28px 0 8px;
+}
+
+
+/* ══ 5. BODY TEXT ═══════════════════════════════════════════════ */
+#page p {
+  font-size: 15px;
+  color: var(--txm);
+  line-height: 1.8;
+  font-weight: 300;
+  margin-bottom: 16px;
+  max-width: 680px;
+}
+
+/* First <p> directly after <h1> becomes a subheadline */
+#page h1 + p {
+  font-family: var(--fh);
+  font-size: clamp(17px, 2.5vw, 22px);
+  font-weight: 600;
+  color: var(--txm);
+  -webkit-text-fill-color: var(--txm);
+  margin-bottom: 12px;
+  max-width: 100%;
+  animation: fadeUp 0.5s ease 0.2s both;
+}
+
+
+/* ══ 6. LINKS ═══════════════════════════════════════════════════ */
+#page a {
+  color: var(--p);
+  text-decoration: none;
+  font-weight: 500;
+  border-bottom: 1px solid rgba(217, 64, 64, 0.3);
+  transition: border-color 0.2s;
+}
+#page a:hover { border-color: var(--p); }
+
+/* Paragraph containing ONLY a link renders as a pill button */
+#page p.cta-p { margin: 24px 0 8px; }
+#page p.cta-p a {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--fh); font-size: 13px; font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 13px 28px; border-radius: 50px;
+  text-decoration: none; border: none;
+  background: var(--gradh); color: #fff;
+  box-shadow: 0 4px 20px rgba(217, 64, 64, 0.28);
+  transition: transform 0.2s, box-shadow 0.2s;
+  -webkit-text-fill-color: #fff;
+}
+#page p.cta-p a::after { content: ' →'; }
+#page p.cta-p a:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(217, 64, 64, 0.38);
+}
+
+
+/* ══ 7. CTA BUTTONS ═════════════════════════════════════════════ */
+/* Flex wrapper for side-by-side buttons */
+.cta-wrap {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 28px 0;
+}
+
+/* Primary gradient pill button */
+.cta-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--fh); font-size: 13px; font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 13px 28px; border-radius: 50px;
+  text-decoration: none; border: none; cursor: pointer;
+  background: var(--gradh);
+  color: #fff !important; -webkit-text-fill-color: #fff !important;
+  box-shadow: 0 4px 20px rgba(217, 64, 64, 0.28);
+  transition: transform 0.2s, box-shadow 0.2s;
+  position: relative; overflow: hidden;
+}
+.cta-btn::after { content: ' →'; }
+.cta-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(217, 64, 64, 0.38);
+}
+
+/* Secondary outlined pill button */
+.cta-btn-sec {
+  display: inline-flex; align-items: center;
+  font-family: var(--fh); font-size: 13px; font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 13px 28px; border-radius: 50px;
+  text-decoration: none;
+  background: var(--bgc);
+  color: var(--tx) !important; -webkit-text-fill-color: var(--tx) !important;
+  border: 1.5px solid var(--br);
+  transition: transform 0.2s, border-color 0.2s;
+}
+.cta-btn-sec:hover {
+  border-color: var(--p);
+  color: var(--p) !important; -webkit-text-fill-color: var(--p) !important;
+  transform: translateY(-2px);
+}
+
+
+/* ══ 8. CARDS ═══════════════════════════════════════════════════ */
+/* Auto-fill card grid — typically wraps H3+content sections */
+.doc-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+  margin: 24px 0 40px;
+}
+
+.doc-card {
+  background: var(--bgc);
+  border: 1px solid var(--br);
+  border-radius: var(--rad);
+  padding: 24px 22px;
+  box-shadow: var(--sh);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  position: relative;
+  overflow: hidden;
+  cursor: default;
+}
+/* Gradient accent bar that slides in on hover */
+.doc-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--gradh);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+.doc-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 40px rgba(217, 64, 64, 0.13);
+  border-color: rgba(217, 64, 64, 0.25);
+}
+.doc-card:hover::after { transform: scaleX(1); }
+.doc-card h3 { margin: 0 0 10px; }
+.doc-card p  { margin: 0; }
+
+
+/* ══ 9. TEAM CARDS ══════════════════════════════════════════════ */
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 24px;
+  margin: 24px 0 40px;
+}
+
+.team-card {
+  background: var(--bgc);
+  border: 1px solid var(--br);
+  border-radius: var(--rad);
+  overflow: hidden;
+  box-shadow: var(--sh);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  display: flex;
+  flex-direction: column;
+}
+.team-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 40px rgba(217, 64, 64, 0.12);
+}
+
+.team-photo {
+  width: 100%; aspect-ratio: 1 / 1;
+  object-fit: cover; object-position: center top;
+  display: block; background: var(--bgs);
+}
+/* Fallback placeholder with gradient + initials */
+.team-photo-placeholder {
+  width: 100%; aspect-ratio: 1 / 1;
+  background: var(--grad);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--fh); font-size: 36px; font-weight: 800;
+  color: #fff; letter-spacing: 0.05em;
+}
+
+.team-info {
+  padding: 20px 20px 18px;
+  display: flex; flex-direction: column; flex: 1;
+}
+.team-name {
+  font-family: var(--fh);
+  font-size: 16px; font-weight: 700;
+  color: var(--tx); margin-bottom: 3px;
+}
+.team-role {
+  font-size: 12px; font-weight: 500;
+  color: var(--p); text-transform: uppercase;
+  letter-spacing: 0.08em; margin-bottom: 12px;
+}
+.team-bio {
+  font-size: 13.5px; color: var(--txm);
+  line-height: 1.7; font-weight: 300;
+  flex: 1; margin-bottom: 16px;
+}
+.team-linkedin {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12px; font-weight: 500;
+  color: var(--s); text-decoration: none;
+  border-bottom: 1px solid rgba(26, 114, 232, 0.3);
+  transition: color 0.2s, border-color 0.2s;
+  width: fit-content;
+}
+.team-linkedin:hover {
+  color: var(--p);
+  border-color: rgba(217, 64, 64, 0.4);
+}
+/* LinkedIn icon via CSS mask */
+.team-linkedin::before {
+  content: '';
+  display: inline-block; width: 14px; height: 14px;
+  background: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z'/%3E%3Ccircle cx='4' cy='4' r='2'/%3E%3C/svg%3E") no-repeat center;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z'/%3E%3Ccircle cx='4' cy='4' r='2'/%3E%3C/svg%3E") no-repeat center;
+  -webkit-mask-size: contain; mask-size: contain;
+  flex-shrink: 0;
+}
+
+
+/* ══ 10. TABLES ═════════════════════════════════════════════════ */
+.table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+#page table {
+  width: 100%; border-collapse: collapse;
+  margin: 24px 0 32px;
+  background: var(--bgc);
+  border-radius: var(--rad); overflow: hidden;
+  box-shadow: var(--sh); font-size: 14px;
+}
+#page th {
+  background: var(--tx); color: #fff;
+  font-family: var(--fh); font-size: 12px; font-weight: 600;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 12px 16px; text-align: left;
+}
+#page td {
+  padding: 12px 16px; color: var(--txm); font-weight: 300;
+  border-bottom: 1px solid var(--br);
+}
+#page tr:last-child td { border-bottom: none; }
+#page tr:nth-child(even) td { background: var(--bgs); }
+
+
+/* ══ 11. IMAGES ═════════════════════════════════════════════════ */
+#page img {
+  max-width: 100%;
+  border-radius: var(--rad);
+  box-shadow: var(--shm);
+  margin: 16px 0;
+}
+
+
+/* ══ 12. BLOCKQUOTE ═════════════════════════════════════════════ */
+#page blockquote {
+  border-left: 4px solid var(--p);
+  margin: 24px 0; padding: 16px 24px;
+  background: var(--bgc);
+  border-radius: 0 var(--rad) var(--rad) 0;
+  font-style: italic; color: var(--txm);
+  box-shadow: var(--sh);
+}
+
+
+/* ══ 13. LISTS ══════════════════════════════════════════════════ */
+#page ul, #page ol {
+  margin: 0 0 20px 20px;
+  color: var(--txm);
+  font-size: 15px; font-weight: 300; line-height: 1.8;
+}
+#page li { margin-bottom: 6px; }
+#page li::marker { color: var(--p); }
+
+
+/* ══ 14. LOADING & ERROR STATES ═════════════════════════════════ */
+#loading {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  min-height: 60vh; gap: 16px;
+  font-size: 14px; color: var(--txm);
+}
+.spinner {
+  width: 32px; height: 32px; border-radius: 50%;
+  border: 3px solid var(--br); border-top-color: var(--p);
+  animation: spin 0.8s linear infinite;
+}
+
+
+/* ══ 15. ANIMATIONS ═════════════════════════════════════════════ */
+@keyframes f1 {
+  0%, 100% { transform: translate(0, 0); }
+  50%       { transform: translate(28px, 18px); }
+}
+@keyframes f2 {
+  0%, 100% { transform: translate(0, 0); }
+  50%       { transform: translate(-22px, 26px); }
+}
+@keyframes spin    { to { transform: rotate(360deg); } }
+@keyframes fadeUp  {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+
+/* ══ 16. RESPONSIVE ═════════════════════════════════════════════ */
+
+/* ── Tablet (≤768px) ─────────────────────────── */
+@media (max-width: 768px) {
+  #page { padding: 48px 24px 64px; }
+
+  #page h1 { font-size: clamp(32px, 8vw, 52px); margin-bottom: 16px; }
+  #page h2 { margin: 40px 0 12px; font-size: clamp(20px, 5vw, 28px); }
+  #page h3 { font-size: 16px; }
+  #page p  { font-size: 15px; max-width: 100%; }
+
+  .doc-cards-grid { grid-template-columns: repeat(2, 1fr); }
+
+  .table-scroll { margin: 0 -24px; padding: 0 24px; }
+  #page table   { min-width: 480px; }
+
+  .cta-wrap { gap: 10px; }
+}
+
+/* ── Mobile (≤480px) ─────────────────────────── */
+@media (max-width: 480px) {
+  #page { padding: 36px 16px 56px; }
+
+  .o1   { width: 300px; height: 300px; top: -100px; left: -80px; }
+  .o2   { width: 250px; height: 250px; bottom: -60px; right: -60px; }
+  .grid { background-size: 40px 40px; }
+
+  #page h1      { font-size: clamp(28px, 9vw, 42px); line-height: 1.08; letter-spacing: -0.02em; }
+  #page h1 + p  { font-size: clamp(15px, 4.5vw, 19px); }
+  #page h2      { font-size: clamp(19px, 5.5vw, 24px); margin: 32px 0 10px; }
+  #page h3      { font-size: 15px; margin: 20px 0 6px; }
+  #page p       { font-size: 14.5px; line-height: 1.75; }
+  #page hr      { margin: 32px 0; }
+
+  .doc-card {
+    padding: 18px 16px;
+    transition: box-shadow 0.25s ease, border-color 0.25s ease;
+  }
+  .doc-card:hover { transform: none; }
+
+  .cta-wrap { flex-direction: column; gap: 10px; }
+  .cta-btn, .cta-btn-sec {
+    width: 100%; justify-content: center;
+    padding: 14px 20px; font-size: 14px;
+  }
+
+  .table-scroll {
+    margin: 0 -16px; padding: 0 16px;
+    -webkit-mask-image: linear-gradient(to right, black 85%, transparent 100%);
+    mask-image: linear-gradient(to right, black 85%, transparent 100%);
+  }
+
+  .team-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .team-info { padding: 14px 14px 12px; }
+  .team-name { font-size: 14px; }
+  .team-bio  { font-size: 12.5px; }
+}
+
+/* ── Small mobile (≤360px) ────────────────────── */
+@media (max-width: 360px) {
+  .doc-cards-grid { grid-template-columns: 1fr; }
+  .team-grid      { grid-template-columns: 1fr; }
+}
