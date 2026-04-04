@@ -409,18 +409,18 @@ body {
   font-size: 12px; font-weight: 500;
   color: #0a66c2;
   text-decoration: none;
-  border-bottom: 1px solid rgba(10, 102, 194, 0.3);
+  border-bottom: 1px solid #0a66c2;
   transition: color 0.2s, border-color 0.2s;
   width: fit-content;
 }
 .team-linkedin:hover a {
   color: #004182;
-  border-color: rgba(10, 102, 194, 0.6);
+  border-color: #004182;
 }
 .team-linkedin::before a{
   content: '';
   display: inline-block; width: 14px; height: 14px;
-  background: currentColor;
+  background: #0a66c2;
   -webkit-mask: url("data:image/svg+xml,...") no-repeat center;
   mask: url("data:image/svg+xml,...") no-repeat center;
   -webkit-mask-size: contain; mask-size: contain;
