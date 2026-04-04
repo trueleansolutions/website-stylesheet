@@ -407,22 +407,22 @@ body {
 .team-linkedin {
   display: inline-flex; align-items: center; gap: 6px;
   font-size: 12px; font-weight: 500;
-  color: #0a66c2; text-decoration: none;
-  border-bottom: 1px solid rgba(26, 114, 232, 0.3);
+  color: #0a66c2;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(10, 102, 194, 0.3);
   transition: color 0.2s, border-color 0.2s;
   width: fit-content;
 }
 .team-linkedin:hover {
-  color: #3b85ce;
-  border-color: rgba(217, 64, 64, 0.4);
+  color: #004182;
+  border-color: rgba(10, 102, 194, 0.6);
 }
-/* LinkedIn icon via CSS mask */
 .team-linkedin::before {
   content: '';
   display: inline-block; width: 14px; height: 14px;
   background: currentColor;
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z'/%3E%3Ccircle cx='4' cy='4' r='2'/%3E%3C/svg%3E") no-repeat center;
-  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z'/%3E%3Ccircle cx='4' cy='4' r='2'/%3E%3C/svg%3E") no-repeat center;
+  -webkit-mask: url("data:image/svg+xml,...") no-repeat center;
+  mask: url("data:image/svg+xml,...") no-repeat center;
   -webkit-mask-size: contain; mask-size: contain;
   flex-shrink: 0;
 }
