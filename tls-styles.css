@@ -13,7 +13,7 @@
      CSS custom properties defined in :root below.
 
   TABLE OF CONTENTS
-  ─────────────────
+  ─────────────────a
   0. DESIGN TOKENS (colors, fonts, spacing)
   1. RESET & BASE
   2. BACKGROUND (animated orbs + grid)
@@ -284,28 +284,67 @@ body {
   box-shadow: 0 8px 28px rgba(217, 64, 64, 0.38);
 }
 
-/* Secondary outlined pill button */
+/*
+  Secondary outlined pill button — gradient text + gradient border
+  ────────────────────────────────────────────────────────────────
+  Technique:
+  - The element uses background-clip: text for gradient text fill.
+  - ::before  sits 1.5px outside the element at z-index -1,
+    painted with --gradh — this is the visible gradient border.
+  - ::after   sits exactly at the element edge at z-index -1,
+    painted solid white — this masks the interior of ::before,
+    leaving only the 1.5px rim visible as the border.
+  - On hover, ::before opacity lifts to full and a red glow appears.
+  ────────────────────────────────────────────────────────────────
+*/
 .cta-btn-sec {
-  display: inline-flex; align-items: center;
+  display: inline-flex; align-items: center; gap: 8px;
   font-family: var(--fh); font-size: 13px; font-weight: 700;
   letter-spacing: 0.04em;
   padding: 13px 28px; border-radius: 50px;
-  text-decoration: none;
-  background: var(--bgc);
-  border: 1.5px solid var(--br);
-  transition: transform 0.2s, border-color 0.2s;
+  text-decoration: none; border: none; cursor: pointer;
+
   /* Gradient text */
-  background-clip: text;
+  background: var(--gradh);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  background-image: var(--gradh), var(--bgc);
-  background-origin: border-box;
+  background-clip: text;
+
+  position: relative;
+  isolation: isolate;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
+
+/* Gradient border layer — sits 1.5px outside */
+.cta-btn-sec::before {
+  content: '';
+  position: absolute;
+  inset: -1.5px;
+  border-radius: 50px;
+  background: var(--gradh);
+  z-index: -1;
+  opacity: 0.55;
+  transition: opacity 0.25s ease;
+}
+
+/* White fill — masks the interior, revealing only the border rim */
+.cta-btn-sec::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50px;
+  background: var(--bgc);
+  z-index: -1;
+}
+
 .cta-btn-sec:hover {
-  border-color: var(--p);
   transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(217, 64, 64, 0.2);
 }
- 
+.cta-btn-sec:hover::before {
+  opacity: 1;
+}
+
 
 /* ══ 8. CARDS ═══════════════════════════════════════════════════ */
 /* Auto-fill card grid — typically wraps H3+content sections */
@@ -417,7 +456,7 @@ body {
   color: #004182;
   border-color: #004182;
 }
-.team-linkedin::before a{
+.team-linkedin::before a {
   content: '';
   display: inline-block; width: 14px; height: 14px;
   background: #0a66c2;
