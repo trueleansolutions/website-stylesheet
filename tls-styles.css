@@ -404,7 +404,7 @@ body {
   line-height: 1.7; font-weight: 300;
   flex: 1; margin-bottom: 16px;
 }
-.team-linkedin {
+.team-linkedin a {
   display: inline-flex; align-items: center; gap: 6px;
   font-size: 12px; font-weight: 500;
   color: #0a66c2;
@@ -413,11 +413,11 @@ body {
   transition: color 0.2s, border-color 0.2s;
   width: fit-content;
 }
-.team-linkedin:hover {
+.team-linkedin:hover a {
   color: #004182;
   border-color: rgba(10, 102, 194, 0.6);
 }
-.team-linkedin::before {
+.team-linkedin::before a{
   content: '';
   display: inline-block; width: 14px; height: 14px;
   background: currentColor;
