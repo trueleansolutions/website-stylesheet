@@ -307,7 +307,6 @@ body {
   /* Gradient text */
   background: var(--gradh);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
   background-clip: text;
 
   position: relative;
