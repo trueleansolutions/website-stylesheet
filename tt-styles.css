@@ -5,15 +5,15 @@
 
 /* ── Tokens ────────────────────────────────────────────────────── */
 :root {
-  --bg:       #f7f9fc;
+  --bg:       #ffffff;
   --bg-alt:   #ffffff;
   --bg-card:  #ffffff;
   --bg-dark:  #0d1b2e;
 
-  --blue:     #0ea5e9;
+  --blue:     #1a56db;
   --blue-dk:  #1e4080;
-  --blue-dim: rgba(14,165,233,0.10);
-  --blue-bdr: rgba(14,165,233,0.25);
+  --blue-dim: rgba(26,86,219,0.10);
+  --blue-bdr: rgba(26,86,219,0.25);
 
   --tx:   #0d1b2e;
   --txm:  #4a5568;
@@ -22,9 +22,9 @@
   --br:   #e2e8f0;
   --br2:  #cbd5e1;
 
-  --grad:      linear-gradient(135deg,#1e4080 0%,#0ea5e9 100%);
-  --grad-h:    linear-gradient(90deg,#1e4080,#0ea5e9);
-  --grad-text: linear-gradient(135deg,#0d1b2e 0%,#0ea5e9 100%);
+  --grad:      linear-gradient(135deg,#1e4080 0%,#1a56db 100%);
+  --grad-h:    linear-gradient(90deg,#1e4080,#1a56db);
+  --grad-text: linear-gradient(135deg,#0d1b2e 0%,#1a56db 100%);
 
   --fh: 'Montserrat', sans-serif;
   --fb: 'Roboto', sans-serif;
@@ -35,7 +35,7 @@
 
   --sh:    0 1px 8px rgba(0,0,0,0.07), 0 4px 16px rgba(0,0,0,0.05);
   --sh-lg: 0 8px 32px rgba(0,0,0,0.12);
-  --glow:  0 0 24px rgba(14,165,233,0.20);
+  --glow:  0 0 24px rgba(26,86,219,0.20);
 }
 
 /* ── Reset ─────────────────────────────────────────────────────── */
@@ -58,15 +58,10 @@ body {
   overflow: hidden;
 }
 .grid { display: none; }
-.orb {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(120px);
-  opacity: 0.07;
-}
+.orb { display: none; }
 .o1 {
   width: 700px; height: 700px;
-  background: #0ea5e9;
+  background: #1a56db;
   top: -200px; left: -200px;
   animation: orb1 18s ease-in-out infinite;
 }
@@ -225,7 +220,7 @@ img {
 }
 .cta-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 28px rgba(14,165,233,0.35), 0 0 0 1px rgba(14,165,233,0.4);
+  box-shadow: 0 6px 28px rgba(26,86,219,0.35), 0 0 0 1px rgba(26,86,219,0.4);
   text-decoration: none;
   color: #fff;
 }
@@ -466,7 +461,7 @@ tr:hover td { background: var(--bg); }
 
 /* ── CALLOUT ───────────────────────────────────────────────────── */
 .tt-callout {
-  background: linear-gradient(135deg,rgba(30,64,128,0.05),rgba(14,165,233,0.06));
+  background: linear-gradient(135deg,rgba(30,64,128,0.05),rgba(26,86,219,0.06));
   border: 1px solid var(--blue-bdr);
   border-radius: var(--rad-lg);
   padding: 36px 32px;
@@ -618,7 +613,7 @@ tr:hover td { background: var(--bg); }
 .form-input::placeholder, .form-textarea::placeholder { color: var(--txh); }
 .form-input:focus, .form-textarea:focus, .form-select:focus {
   border-color: var(--blue-bdr);
-  box-shadow: 0 0 0 3px rgba(14,165,233,0.1);
+  box-shadow: 0 0 0 3px rgba(26,86,219,0.1);
 }
 .form-textarea { resize: vertical; min-height: 120px; line-height: 1.6; }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
