@@ -826,3 +826,14 @@ tr:hover td { background: var(--bg-alt); }
 #page > *:first-child:not(.tt-banner) {
   padding-top: 64px;
 }
+
+/* ── BANNER solo mode (no logo) ────────────────────────────────── */
+.tt-banner-inner--solo {
+  grid-template-columns: 1fr;
+  max-width: 800px;
+}
+.tt-banner-solo {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
