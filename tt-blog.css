@@ -207,8 +207,8 @@
 .post-content strong { font-weight: 500; color: var(--tx); }
 
 .post-content .cta-wrap { display: flex; gap: 10px; flex-wrap: wrap; margin: 20px 0; }
-.post-content .cta-btn { display: inline-flex; align-items: center; gap: 6px; font-family: var(--fh); font-size: 13px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; padding: 12px 22px; border-radius: 7px; text-decoration: none; border: none; background: var(--grad-h); color: #fff; box-shadow: 0 4px 18px rgba(14,165,233,0.25); transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; }
-.post-content .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(14,165,233,0.35); border-bottom: none; color: #fff; }
+.post-content .cta-btn { display: inline-flex; align-items: center; gap: 6px; font-family: var(--fh); font-size: 13px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; padding: 12px 22px; border-radius: 7px; text-decoration: none; border: none; background: var(--grad-h); color: #fff; box-shadow: 0 4px 18px rgba(5,87,148,0.25); transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; }
+.post-content .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(5,87,148,0.35); border-bottom: none; color: #fff; }
 .post-content .cta-btn::after { content: ' →'; }
 .post-content .cta-btn-sec { display: inline-flex; align-items: center; font-family: var(--fh); font-size: 13px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; padding: 12px 22px; border-radius: 7px; text-decoration: none; background: transparent; color: var(--tx); border: 1px solid var(--br2); transition: all 0.2s; cursor: pointer; }
 .post-content .cta-btn-sec:hover { border-color: var(--blue-bdr); color: var(--blue); transform: translateY(-2px); }
