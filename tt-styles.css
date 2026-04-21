@@ -104,7 +104,7 @@ body {
   z-index: 1;
   max-width: 960px;
   margin: 0 auto;
-  padding: 64px 32px 100px;
+  padding: 0 32px 100px;
 }
 
 /* ── Loading ───────────────────────────────────────────────────── */
@@ -629,7 +629,7 @@ tr:hover td { background: var(--bg-alt); }
 
 /* ── Responsive ────────────────────────────────────────────────── */
 @media (max-width: 768px) {
-  #page { padding: 40px 20px 80px; }
+  #page { padding: 0 20px 80px; }
   .tt-cols    { grid-template-columns: 1fr; gap: 28px; }
   .tt-fitlist { grid-template-columns: 1fr; gap: 28px; }
   .tt-cards   { grid-template-columns: 1fr; }
@@ -664,6 +664,7 @@ tr:hover td { background: var(--bg-alt); }
   right: 50%;
   margin-left: -50vw;
   margin-right: -50vw;
+  margin-top: 0;
   margin-bottom: 48px;
   overflow: hidden;
   min-height: 340px;
@@ -819,4 +820,9 @@ tr:hover td { background: var(--bg-alt); }
 .tt-carousel-dot.active { background: var(--blue); transform: scale(1.4); }
 @media (max-width: 480px) {
   .tt-carousel-slide { padding: 28px 24px; }
+}
+
+/* ── Page top spacing — only when first element is NOT a banner ── */
+#page > *:first-child:not(.tt-banner) {
+  padding-top: 64px;
 }
