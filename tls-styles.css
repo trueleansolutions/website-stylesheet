@@ -13,58 +13,40 @@
      CSS custom properties defined in :root below.
 
   TABLE OF CONTENTS
-  ─────────────────a
-  0. DESIGN TOKENS (colors, fonts, spacing)
-  1. RESET & BASE
-  2. BACKGROUND (animated orbs + grid)
-  3. PAGE CONTAINER
-  4. HEADINGS  (h1 → h3)
-  5. BODY TEXT  (p, subheadline)
-  6. LINKS
-  7. CTA BUTTONS  (.cta-btn, .cta-btn-sec, .cta-wrap)
-  8. CARDS  (.doc-card, .doc-cards-grid)
-  9. TEAM CARDS  (.team-grid, .team-card, …)
+  ─────────────────
+  0.  DESIGN TOKENS (colors, fonts, spacing)
+  1.  RESET & BASE
+  2.  BACKGROUND (animated orbs + grid)
+  3.  PAGE CONTAINER
+  4.  HEADINGS  (h1 → h3)
+  5.  BODY TEXT  (p, subheadline)
+  6.  LINKS
+  7.  CTA BUTTONS  (.cta-btn, .cta-btn-sec, .cta-wrap)
+  8.  CARDS  (.doc-card, .doc-cards-grid)
+  9.  TEAM CARDS  (.team-grid, .team-card, …)
   10. TABLES
   11. IMAGES
   12. BLOCKQUOTE
   13. LISTS
   14. LOADING & ERROR STATES
   15. ANIMATIONS
-  16. RESPONSIVE  (tablet ≤768px, mobile ≤480px, small ≤360px)
+  16. COMPONENTS
+      16a. BANNER     (.tt-banner, …)
+      16b. CAROUSEL   (.tt-carousel, …)
+      16c. HERO       (.tt-hero, …)
+      16d. STATS      (.tt-stats, .tt-stat, …)
+      16e. CARDS      (.tt-cards, .tt-card, …)
+      16f. STEPS      (.tt-steps, .tt-step, …)
+      16g. FITLIST    (.tt-fitlist, …)
+      16h. CALLOUT    (.tt-callout, …)
+      16i. COLS       (.tt-cols, …)
+      16j. TESTIMONIALS (.t-card, …)
+  17. RESPONSIVE  (tablet ≤768px, mobile ≤480px, small ≤360px)
   ══════════════════════════════════════════════════════════════════
 */
 
 
 /* ══ 0. DESIGN TOKENS ═══════════════════════════════════════════ */
-/*
-  COLORS
-  ──────
-  --p    Primary (Red)          #D94040   CTAs, accents, H3 text, list markers
-  --a    Accent (Purple)        #8B2D6E   Mid-stop on gradient
-  --s    Secondary (Blue)       #1A72E8   Links, LinkedIn color
-  --bg   Page background        #F8F8FC   Very light lavender-white
-  --bgc  Card / surface white   #FFFFFF   Cards, tables, blockquotes
-  --bgs  Subtle surface         #F0F0F7   Alternating table rows, placeholder
-  --tx   Body text dark         #0D0D0D   Headings, strong text
-  --txm  Muted text             #5A5A72   Body copy, captions
-  --br   Border / rule          #E2E2EE   All borders and dividers
-
-  GRADIENTS
-  ─────────
-  --grad   135° diagonal   Red → Purple → Blue   (hero text fills)
-  --gradh  90°  horizontal  Red → Blue            (buttons, underline bars)
-
-  FONTS
-  ─────
-  --fh  'Montserrat'  600/700/800   Headings, labels, buttons
-  --fb  'Roboto'      300/400/500   All body copy
-
-  SHAPE & SHADOW
-  ──────────────
-  --rad   12px      Default border-radius (cards, tables, images)
-  --sh    Subtle box-shadow    (cards at rest)
-  --shm   Strong box-shadow    (images, elevated elements)
-*/
 :root {
   /* Brand colors */
   --p:    #D94040;
@@ -75,7 +57,15 @@
   --bgs:  #F0F0F7;
   --tx:   #0D0D0D;
   --txm:  #5A5A72;
+  --txh:  #94A3B8;
   --br:   #E2E2EE;
+  --br2:  #CBD5E1;
+
+  /* Derived component tokens (mapped to brand) */
+  --p-dim:  rgba(217, 64, 64, 0.10);
+  --p-bdr:  rgba(217, 64, 64, 0.25);
+  --s-dim:  rgba(26, 114, 232, 0.10);
+  --s-bdr:  rgba(26, 114, 232, 0.25);
 
   /* Gradients */
   --grad:  linear-gradient(135deg, #D94040 0%, #8B2D6E 50%, #1A72E8 100%);
@@ -86,7 +76,9 @@
   --fb: 'Roboto', sans-serif;
 
   /* Shape */
-  --rad: 12px;
+  --rad:    12px;
+  --rad-lg: 16px;
+  --rad-xl: 24px;
 
   /* Shadows */
   --sh:  0 2px 16px rgba(13, 13, 13, 0.07);
@@ -106,11 +98,11 @@ body {
   background: var(--bg);
   color: var(--tx);
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
 
 /* ══ 2. BACKGROUND ══════════════════════════════════════════════ */
-/* Animated blurred orbs + subtle grid — placed behind all content */
 #bg {
   position: fixed;
   inset: 0;
@@ -124,21 +116,18 @@ body {
   filter: blur(90px);
   opacity: 0.10;
 }
-/* Red orb — top-left */
 .o1 {
   width: 600px; height: 600px;
   background: var(--p);
   top: -200px; left: -150px;
   animation: f1 14s ease-in-out infinite;
 }
-/* Blue orb — bottom-right */
 .o2 {
   width: 500px; height: 500px;
   background: var(--s);
   bottom: -100px; right: -100px;
   animation: f2 17s ease-in-out infinite;
 }
-/* Dot grid overlay */
 .grid {
   position: absolute;
   inset: 0;
@@ -185,7 +174,6 @@ body {
   border-bottom: 2px solid var(--br);
   position: relative;
 }
-/* Gradient accent line under h2 */
 #page h2::after {
   content: '';
   position: absolute;
@@ -213,7 +201,6 @@ body {
   max-width: 680px;
 }
 
-/* First <p> directly after <h1> becomes a subheadline */
 #page h1 + p {
   font-family: var(--fh);
   font-size: clamp(17px, 2.5vw, 22px);
@@ -236,7 +223,6 @@ body {
 }
 #page a:hover { border-color: var(--p); }
 
-/* Paragraph containing ONLY a link renders as a pill button */
 #page p.cta-p { margin: 24px 0 8px; }
 #page p.cta-p a {
   display: inline-flex; align-items: center; gap: 8px;
@@ -257,7 +243,6 @@ body {
 
 
 /* ══ 7. CTA BUTTONS ═════════════════════════════════════════════ */
-/* Flex wrapper for side-by-side buttons */
 .cta-wrap {
   display: flex;
   gap: 12px;
@@ -265,7 +250,6 @@ body {
   margin: 28px 0;
 }
 
-/* Primary gradient pill button */
 .cta-btn {
   display: inline-flex; align-items: center; gap: 8px;
   font-family: var(--fh); font-size: 13px; font-weight: 700;
@@ -284,37 +268,19 @@ body {
   box-shadow: 0 8px 28px rgba(217, 64, 64, 0.38);
 }
 
-/*
-  Secondary outlined pill button — gradient text + gradient border
-  ────────────────────────────────────────────────────────────────
-  Technique:
-  - The element uses background-clip: text for gradient text fill.
-  - ::before  sits 1.5px outside the element at z-index -1,
-    painted with --gradh — this is the visible gradient border.
-  - ::after   sits exactly at the element edge at z-index -1,
-    painted solid white — this masks the interior of ::before,
-    leaving only the 1.5px rim visible as the border.
-  - On hover, ::before opacity lifts to full and a red glow appears.
-  ────────────────────────────────────────────────────────────────
-*/
 .cta-btn-sec {
   display: inline-flex; align-items: center; gap: 8px;
   font-family: var(--fh); font-size: 13px; font-weight: 700;
   letter-spacing: 0.04em;
   padding: 13px 28px; border-radius: 50px;
   text-decoration: none; border: none; cursor: pointer;
-
-  /* Gradient text */
   background: var(--gradh);
   -webkit-background-clip: text;
   background-clip: text;
-
   position: relative;
   isolation: isolate;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-
-/* Gradient border layer — sits 1.5px outside */
 .cta-btn-sec::before {
   content: '';
   position: absolute;
@@ -325,8 +291,6 @@ body {
   opacity: 0.55;
   transition: opacity 0.25s ease;
 }
-
-/* White fill — masks the interior, revealing only the border rim */
 .cta-btn-sec::after {
   content: '';
   position: absolute;
@@ -335,18 +299,14 @@ body {
   background: var(--bgc);
   z-index: -1;
 }
-
 .cta-btn-sec:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 24px rgba(217, 64, 64, 0.2);
 }
-.cta-btn-sec:hover::before {
-  opacity: 1;
-}
+.cta-btn-sec:hover::before { opacity: 1; }
 
 
-/* ══ 8. CARDS ═══════════════════════════════════════════════════ */
-/* Auto-fill card grid — typically wraps H3+content sections */
+/* ══ 8. DOC CARDS ═══════════════════════════════════════════════ */
 .doc-cards-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -365,7 +325,6 @@ body {
   overflow: hidden;
   cursor: default;
 }
-/* Gradient accent bar that slides in on hover */
 .doc-card::after {
   content: '';
   position: absolute;
@@ -379,7 +338,7 @@ body {
 .doc-card:hover {
   transform: translateY(-6px);
   box-shadow: 0 16px 40px rgba(217, 64, 64, 0.13);
-  border-color: rgba(217, 64, 64, 0.25);
+  border-color: var(--p-bdr);
 }
 .doc-card:hover::after { transform: scaleX(1); }
 .doc-card h3 { margin: 0 0 10px; }
@@ -397,24 +356,26 @@ body {
 .team-card {
   background: var(--bgc);
   border: 1px solid var(--br);
-  border-radius: var(--rad);
+  border-radius: var(--rad-lg);
   overflow: hidden;
   box-shadow: var(--sh);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
   display: flex;
   flex-direction: column;
 }
 .team-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 16px 40px rgba(217, 64, 64, 0.12);
+  border-color: var(--p-bdr);
 }
 
 .team-photo {
   width: 100%; aspect-ratio: 1 / 1;
   object-fit: cover; object-position: center top;
-  display: block; background: var(--bgs);
+  display: block; margin: 0;
+  border-radius: 0; box-shadow: none;
+  background: var(--bgs);
 }
-/* Fallback placeholder with gradient + initials */
 .team-photo-placeholder {
   width: 100%; aspect-ratio: 1 / 1;
   background: var(--grad);
@@ -442,28 +403,15 @@ body {
   line-height: 1.7; font-weight: 300;
   flex: 1; margin-bottom: 16px;
 }
-.team-linkedin a {
-  display: inline-flex; align-items: center; gap: 6px;
-  font-size: 12px; font-weight: 500;
+.team-linkedin {
+  font-size: 12px; font-weight: 600;
   color: #0a66c2;
   text-decoration: none;
   border-bottom: 1px solid #0a66c2;
   transition: color 0.2s, border-color 0.2s;
   width: fit-content;
 }
-.team-linkedin:hover a {
-  color: #004182;
-  border-color: #004182;
-}
-.team-linkedin::before a {
-  content: '';
-  display: inline-block; width: 14px; height: 14px;
-  background: #0a66c2;
-  -webkit-mask: url("data:image/svg+xml,...") no-repeat center;
-  mask: url("data:image/svg+xml,...") no-repeat center;
-  -webkit-mask-size: contain; mask-size: contain;
-  flex-shrink: 0;
-}
+.team-linkedin:hover { color: #004182; border-color: #004182; }
 
 
 /* ══ 10. TABLES ═════════════════════════════════════════════════ */
@@ -532,6 +480,15 @@ body {
   border: 3px solid var(--br); border-top-color: var(--p);
   animation: spin 0.8s linear infinite;
 }
+.tt-error {
+  padding: 60px 32px; text-align: center;
+  font-size: 14px; color: var(--txm);
+  max-width: 480px; margin: 0 auto;
+}
+.tt-error strong {
+  display: block; margin-bottom: 8px;
+  color: var(--p); font-family: var(--fh);
+}
 
 
 /* ══ 15. ANIMATIONS ═════════════════════════════════════════════ */
@@ -543,14 +500,552 @@ body {
   0%, 100% { transform: translate(0, 0); }
   50%       { transform: translate(-22px, 26px); }
 }
-@keyframes spin    { to { transform: rotate(360deg); } }
-@keyframes fadeUp  {
+@keyframes spin   { to { transform: rotate(360deg); } }
+@keyframes fadeUp {
   from { opacity: 0; transform: translateY(18px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
 
-/* ══ 16. RESPONSIVE ═════════════════════════════════════════════ */
+/* ══ 16. COMPONENTS ═════════════════════════════════════════════ */
+
+/* ── 16a. BANNER ──────────────────────────────────────────────── */
+.tt-banner {
+  position: relative;
+  border-radius: var(--rad-lg);
+  overflow: hidden;
+  margin: 0 0 48px;
+  background: var(--tx);
+  min-height: 220px;
+  display: flex;
+  align-items: stretch;
+}
+.tt-banner-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.tt-banner-bg img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  margin: 0;
+  border-radius: 0;
+  box-shadow: none;
+  opacity: 0.18;
+}
+/* Dark overlay so text is always readable */
+.tt-banner-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(13,13,13,0.88) 0%, rgba(13,13,13,0.60) 100%);
+}
+.tt-banner-inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  gap: 48px;
+  align-items: center;
+  padding: 48px 40px;
+  width: 100%;
+}
+.tt-banner-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.tt-banner-logo {
+  height: 52px;
+  width: auto;
+  display: block;
+  margin: 0 0 4px;
+  border-radius: 0;
+  box-shadow: none;
+}
+.tt-banner-wordmark {
+  font-family: var(--fh);
+  font-size: 22px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+.tt-banner-wordmark strong { color: #fff; font-weight: 900; }
+.tt-banner-wordmark span   { color: rgba(255,255,255,0.75); }
+.tt-banner-tagline {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.50);
+}
+.tt-banner-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.tt-banner-headline {
+  font-family: var(--fh);
+  font-size: clamp(20px, 2.5vw, 28px);
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+.tt-banner-sub {
+  font-size: 14px;
+  color: rgba(255,255,255,0.65);
+  line-height: 1.7;
+  font-weight: 300;
+  margin: 0;
+  max-width: 100%;
+}
+
+/* ── 16b. CAROUSEL ────────────────────────────────────────────── */
+.tt-carousel {
+  margin: 32px 0;
+  background: var(--bgc);
+  border: 1px solid var(--br);
+  border-radius: var(--rad-lg);
+  overflow: hidden;
+  box-shadow: var(--sh);
+}
+.tt-carousel-track-wrap {
+  overflow: hidden;
+}
+.tt-carousel-track {
+  display: flex;
+  transition: transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.tt-carousel-slide {
+  min-width: 100%;
+  padding: 40px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.tt-carousel-quote {
+  font-family: var(--fh);
+  font-size: clamp(17px, 2.5vw, 22px);
+  font-weight: 700;
+  color: var(--tx);
+  line-height: 1.45;
+  letter-spacing: -0.015em;
+  position: relative;
+}
+.tt-carousel-quote::before {
+  content: '\201C';
+  font-family: Georgia, serif;
+  font-size: 64px;
+  color: var(--p);
+  opacity: 0.15;
+  position: absolute;
+  top: -16px;
+  left: -8px;
+  line-height: 1;
+  pointer-events: none;
+}
+.tt-carousel-attr {
+  font-size: 13px;
+  color: var(--txm);
+  font-weight: 500;
+  letter-spacing: 0.03em;
+}
+.tt-carousel-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 16px 24px 20px;
+  border-top: 1px solid var(--br);
+}
+.tt-carousel-btn {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--br);
+  background: var(--bgc);
+  color: var(--txm);
+  font-size: 16px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+  line-height: 1;
+}
+.tt-carousel-btn:hover {
+  border-color: var(--p-bdr);
+  color: var(--p);
+  background: var(--p-dim);
+}
+.tt-carousel-dots { display: flex; gap: 6px; align-items: center; }
+.tt-carousel-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--br2);
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+.tt-carousel-dot.active {
+  background: var(--p);
+  transform: scale(1.4);
+}
+
+/* ── 16c. HERO ────────────────────────────────────────────────── */
+.tt-hero { padding: 48px 0 40px; }
+.tt-hero-eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--p);
+  margin-bottom: 18px;
+}
+.tt-hero h1 {
+  margin-bottom: 20px;
+  /* Inherits #page h1 gradient styles */
+}
+.tt-hero p {
+  font-size: 18px;
+  max-width: 620px;
+  margin-bottom: 0;
+}
+
+/* ── 16d. STATS ───────────────────────────────────────────────── */
+.tt-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 16px;
+  margin: 32px 0;
+}
+.tt-stat {
+  background: var(--bgc);
+  border: 1px solid var(--br);
+  border-radius: var(--rad);
+  padding: 28px 24px;
+  transition: border-color 0.25s, box-shadow 0.25s;
+}
+.tt-stat:hover { border-color: var(--p-bdr); box-shadow: var(--sh); }
+.tt-stat-value {
+  font-family: var(--fh);
+  font-size: 42px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  margin-bottom: 10px;
+  background: var(--gradh);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.tt-stat-label {
+  font-size: 13px;
+  color: var(--txm);
+  font-weight: 300;
+  line-height: 1.55;
+}
+
+/* ── 16e. FEATURE CARDS ───────────────────────────────────────── */
+.tt-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+  margin: 32px 0;
+}
+.tt-card {
+  background: var(--bgc);
+  border: 1px solid var(--br);
+  border-radius: var(--rad);
+  padding: 26px 22px;
+  transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+  position: relative;
+  overflow: hidden;
+}
+.tt-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--gradh);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s;
+}
+.tt-card:hover {
+  border-color: var(--p-bdr);
+  transform: translateY(-3px);
+  box-shadow: var(--sh);
+}
+.tt-card:hover::after { transform: scaleX(1); }
+.tt-card-icon {
+  width: 38px; height: 38px;
+  border-radius: 9px;
+  background: var(--p-dim);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+.tt-card-icon svg {
+  width: 18px; height: 18px;
+  stroke: var(--p);
+  fill: none;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.tt-card h3 {
+  font-size: 14px;
+  color: var(--tx);
+  margin-bottom: 8px;
+}
+.tt-card p  { font-size: 13px; margin: 0; max-width: 100%; }
+
+/* ── 16f. STEPS ───────────────────────────────────────────────── */
+.tt-steps {
+  display: flex;
+  flex-direction: column;
+  margin: 32px 0;
+  border: 1px solid var(--br);
+  border-radius: var(--rad-lg);
+  overflow: hidden;
+  background: var(--bgc);
+  box-shadow: var(--sh);
+}
+.tt-step {
+  display: flex;
+  gap: 20px;
+  padding: 22px 24px;
+  border-bottom: 1px solid var(--br);
+  transition: background 0.2s;
+}
+.tt-step:last-child { border-bottom: none; }
+.tt-step:hover { background: var(--bgs); }
+.tt-step-num {
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  background: var(--p-dim);
+  border: 1px solid var(--p-bdr);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--p);
+  font-family: var(--fh);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.tt-step-content { display: flex; flex-direction: column; }
+.tt-step-title {
+  font-family: var(--fh);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--tx);
+  margin-bottom: 5px;
+}
+.tt-step-body {
+  font-size: 13px;
+  color: var(--txm);
+  font-weight: 300;
+  line-height: 1.65;
+}
+
+/* ── 16g. FITLIST ─────────────────────────────────────────────── */
+.tt-fitlist {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  margin: 32px 0;
+}
+.tt-fitlist-col { display: flex; flex-direction: column; }
+.tt-fitlist-heading {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--txh);
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--br);
+}
+.tt-fit-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--br);
+  font-size: 14px;
+  color: var(--txm);
+  font-weight: 300;
+  line-height: 1.55;
+}
+.tt-fit-item:last-child { border-bottom: none; }
+.tt-fit-icon {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+}
+.tt-fit-icon.yes { background: var(--s-dim); }
+.tt-fit-icon.no  { background: var(--p-dim); }
+.tt-fit-icon svg { width: 10px; height: 10px; }
+
+/* ── 16h. CALLOUT ─────────────────────────────────────────────── */
+.tt-callout {
+  background: linear-gradient(135deg, rgba(217,64,64,0.04), rgba(26,114,232,0.06));
+  border: 1px solid var(--p-bdr);
+  border-radius: var(--rad-lg);
+  padding: 36px 32px;
+  margin: 32px 0;
+  position: relative;
+  overflow: hidden;
+}
+.tt-callout::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--gradh);
+}
+.tt-callout-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--p);
+  margin-bottom: 12px;
+}
+.tt-callout h3 {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--tx);
+  line-height: 1.2;
+  margin-bottom: 14px;
+  letter-spacing: -0.02em;
+}
+.tt-callout p  { font-size: 15px; margin-bottom: 20px; max-width: 100%; }
+.tt-callout-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--s);
+  background: var(--s-dim);
+  border: 1px solid var(--s-bdr);
+  border-radius: 20px;
+  padding: 7px 16px;
+}
+.tt-callout-tag svg {
+  width: 12px; height: 12px;
+  stroke: var(--s);
+  fill: none;
+  stroke-width: 2.5;
+}
+
+/* ── 16i. COLS ────────────────────────────────────────────────── */
+.tt-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  margin: 32px 0;
+  align-items: start;
+}
+.tt-col-left p,
+.tt-col-right p { max-width: 100%; }
+
+/* ── 16j. TESTIMONIALS ────────────────────────────────────────── */
+.t-card {
+  width: 320px;
+  flex-shrink: 0;
+  background: var(--bgc);
+  border: 1px solid var(--br);
+  border-radius: var(--rad-lg);
+  padding: 26px 24px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-shadow: var(--sh);
+  transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+  position: relative;
+  overflow: hidden;
+}
+.t-card::before {
+  content: '\201C';
+  position: absolute;
+  top: 12px; right: 20px;
+  font-family: Georgia, serif;
+  font-size: 72px;
+  color: var(--p);
+  opacity: 0.07;
+  line-height: 1;
+  pointer-events: none;
+}
+.t-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--gradh);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s;
+}
+.t-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(217, 64, 64, 0.12);
+  border-color: var(--p-bdr);
+}
+.t-card:hover::after { transform: scaleX(1); }
+.t-card-top { display: flex; align-items: center; gap: 12px; }
+.t-avatar {
+  width: 46px; height: 46px;
+  border-radius: 50%;
+  background: var(--grad);
+  color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--fh); font-size: 14px; font-weight: 700;
+  flex-shrink: 0;
+}
+.t-name    { font-size: 14px; font-weight: 500; color: var(--tx); }
+.t-role    { font-size: 11.5px; color: var(--txh); margin-top: 2px; line-height: 1.4; }
+.t-pos     { font-weight: 500; }
+.t-date    { font-size: 11px; color: var(--txh); margin-top: 2px; }
+.t-stars   { font-size: 15px; color: #F5A623; letter-spacing: 2px; }
+.t-text    { font-size: 13.5px; color: var(--txm); line-height: 1.7; font-style: italic; font-weight: 300; flex: 1; }
+.t-text .t-trunc       { display: inline; }
+.t-text .t-full        { display: none; }
+.t-text.exp .t-trunc   { display: none; }
+.t-text.exp .t-full    { display: inline; }
+.t-rm {
+  display: inline-block; margin-top: 6px;
+  font-size: 12px; font-weight: 500;
+  color: var(--s); background: none; border: none;
+  padding: 0; cursor: pointer;
+  text-decoration: underline; text-underline-offset: 2px;
+}
+.t-rm:hover { color: var(--p); }
+.t-badge {
+  font-size: 10.5px; font-weight: 500;
+  color: var(--p); background: var(--p-dim);
+  border-radius: 20px; padding: 3px 10px;
+}
+.t-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--br2);
+  transition: background 0.2s, transform 0.2s;
+  cursor: pointer;
+}
+.t-dot.active { background: var(--p); transform: scale(1.4); }
+
+
+/* ══ 17. RESPONSIVE ═════════════════════════════════════════════ */
 
 /* ── Tablet (≤768px) ─────────────────────────── */
 @media (max-width: 768px) {
@@ -562,11 +1057,27 @@ body {
   #page p  { font-size: 15px; max-width: 100%; }
 
   .doc-cards-grid { grid-template-columns: repeat(2, 1fr); }
+  .table-scroll   { margin: 0 -24px; padding: 0 24px; }
+  #page table     { min-width: 480px; }
+  .cta-wrap       { gap: 10px; }
 
-  .table-scroll { margin: 0 -24px; padding: 0 24px; }
-  #page table   { min-width: 480px; }
+  /* Banner */
+  .tt-banner-inner { flex-direction: column; gap: 24px; padding: 36px 28px; }
+  .tt-banner-left  { align-items: flex-start; }
 
-  .cta-wrap { gap: 10px; }
+  /* Component grids */
+  .tt-cols    { grid-template-columns: 1fr; gap: 32px; }
+  .tt-fitlist { grid-template-columns: 1fr; gap: 32px; }
+  .tt-cards   { grid-template-columns: 1fr 1fr; }
+  .tt-stats   { grid-template-columns: 1fr 1fr; }
+  .team-grid  { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
+
+  /* Hero */
+  .tt-hero   { padding: 32px 0 28px; }
+  .tt-hero p { font-size: 16px; }
+
+  /* Carousel */
+  .tt-carousel-slide { padding: 28px 32px; }
 }
 
 /* ── Mobile (≤480px) ─────────────────────────── */
@@ -577,17 +1088,14 @@ body {
   .o2   { width: 250px; height: 250px; bottom: -60px; right: -60px; }
   .grid { background-size: 40px 40px; }
 
-  #page h1      { font-size: clamp(28px, 9vw, 42px); line-height: 1.08; letter-spacing: -0.02em; }
+  #page h1      { font-size: clamp(28px, 9vw, 42px); line-height: 1.08; }
   #page h1 + p  { font-size: clamp(15px, 4.5vw, 19px); }
   #page h2      { font-size: clamp(19px, 5.5vw, 24px); margin: 32px 0 10px; }
   #page h3      { font-size: 15px; margin: 20px 0 6px; }
   #page p       { font-size: 14.5px; line-height: 1.75; }
   #page hr      { margin: 32px 0; }
 
-  .doc-card {
-    padding: 18px 16px;
-    transition: box-shadow 0.25s ease, border-color 0.25s ease;
-  }
+  .doc-card     { padding: 18px 16px; }
   .doc-card:hover { transform: none; }
 
   .cta-wrap { flex-direction: column; gap: 10px; }
@@ -606,10 +1114,32 @@ body {
   .team-info { padding: 14px 14px 12px; }
   .team-name { font-size: 14px; }
   .team-bio  { font-size: 12.5px; }
+
+  /* Banner */
+  .tt-banner-inner    { padding: 28px 20px; gap: 20px; }
+  .tt-banner-wordmark { font-size: 18px; }
+  .tt-banner-headline { font-size: clamp(16px, 5vw, 20px); }
+
+  /* Carousel */
+  .tt-carousel-slide { padding: 24px 20px; }
+  .tt-carousel-quote { font-size: 16px; }
+
+  /* Stats / Cards */
+  .tt-stats { grid-template-columns: 1fr 1fr; }
+  .tt-cards { grid-template-columns: 1fr; }
+
+  /* Fitlist */
+  .tt-fitlist { gap: 24px; }
+
+  /* Callout */
+  .tt-callout { padding: 28px 20px; }
+  .tt-callout h3 { font-size: 18px; }
 }
 
 /* ── Small mobile (≤360px) ────────────────────── */
 @media (max-width: 360px) {
   .doc-cards-grid { grid-template-columns: 1fr; }
   .team-grid      { grid-template-columns: 1fr; }
+  .tt-stats       { grid-template-columns: 1fr; }
+  .tt-cards       { grid-template-columns: 1fr; }
 }
