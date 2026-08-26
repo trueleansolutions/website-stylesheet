@@ -821,10 +821,6 @@ tr:hover td { background: var(--bg-alt); }
   .tt-carousel-slide { padding: 28px 24px; }
 }
 
-/* ── Page top spacing — only when first element is NOT a banner ── */
-#page > *:first-child:not(.tt-banner) {
-  padding-top: 32px;
-}
 
 /* ── BANNER solo mode (no logo) ────────────────────────────────── */
 .tt-banner-inner--solo {
