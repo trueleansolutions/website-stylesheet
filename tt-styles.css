@@ -742,7 +742,7 @@ tr:hover td { background: var(--bg-alt); }
   font-family: var(--fh);
   font-size: clamp(15px, 2vw, 20px);
   font-weight: 800;
-  color: #999999;
+  color: #666666;
   line-height: 1.5;
   margin: 0;
 }
