@@ -674,7 +674,6 @@ tr:hover td { background: var(--bg-alt); }
 .tt-banner-bg {
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, #dbeafe 0%, #eff6ff 60%, #ffffff 100%);
   z-index: 0;
 }
 .tt-banner-bg img {
